@@ -11,8 +11,8 @@
 
     0x000ED000..0x000F3FFF (28KB ) Private Config Data (Bonding, Keys, etc.)
     0x000AD000..0x000ECFFF (256KB) User Filesystem
-
-    0x00026000..0x000ACFFF (540KB) Application Code (including ISR vector)
+    0x000AC000..0x000ACFFF (  4KB) NVM Storage
+    0x00026000..0x000ABFFF (536KB) Application Code (including ISR vector)
     0x00001000..0x00025FFF (148KB) SoftDevice
     0x00000000..0x00000FFF   (4KB) Master Boot Record
 */
@@ -23,7 +23,8 @@ MEMORY
     FLASH (rx)      : ORIGIN = 0x00000000, LENGTH = 0x100000
 
     FLASH_ISR (rx)  : ORIGIN = 0x00026000, LENGTH = 0x001000
-    FLASH_TEXT (rx) : ORIGIN = 0x00027000, LENGTH = 0x086000
+    FLASH_TEXT (rx) : ORIGIN = 0x00027000, LENGTH = 0x085000
+    FLASH_NVM (r)   : ORIGIN = 0x000AC000, LENGTH = 0x001000
     FLASH_FATFS (r) : ORIGIN = 0x000AD000, LENGTH = 0x040000
 
     /* 0x2000000 - RAM:ORIGIN is reserved for Softdevice */

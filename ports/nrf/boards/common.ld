@@ -2,6 +2,10 @@
 __fatfs_flash_start_addr = ORIGIN(FLASH_FATFS);
 __fatfs_flash_length     = LENGTH(FLASH_FATFS);
 
+/* Flash region for Non-Volatile Memory NVM */
+__nvm_flash_start_addr = ORIGIN(FLASH_NVM);
+__nvm_flash_length     = LENGTH(FLASH_NVM);
+
 /* define output sections */
 SECTIONS
 {

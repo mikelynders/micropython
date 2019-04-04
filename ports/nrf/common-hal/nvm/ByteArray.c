@@ -31,8 +31,12 @@
 
 #include "peripherals/nrf/nvm.h"
 
+// defined in linker
+extern uint32_t __nvm_flash_start_addr[];
+extern uint32_t __nvm_flash_length[];
+
 uint32_t common_hal_nvm_bytearray_get_length(nvm_bytearray_obj_t *self) {
-    return self->len;
+    return (uint32_t)__nvm_flash_length;
 }
 
 static void write_page(uint32_t page_addr, uint32_t offset, uint32_t len, uint8_t *bytes) {
@@ -52,7 +56,7 @@ static void write_page(uint32_t page_addr, uint32_t offset, uint32_t len, uint8_
 bool common_hal_nvm_bytearray_set_bytes(nvm_bytearray_obj_t *self,
         uint32_t start_index, uint8_t* values, uint32_t len) {
 
-    uint32_t address = self->start_address + start_index;
+    uint32_t address = (uint32_t)__nvm_flash_start_addr + start_index;
     uint32_t offset = address % FLASH_PAGE_SIZE;
     uint32_t page_addr = address - offset;
 
@@ -69,5 +73,5 @@ bool common_hal_nvm_bytearray_set_bytes(nvm_bytearray_obj_t *self,
 
 void common_hal_nvm_bytearray_get_bytes(nvm_bytearray_obj_t *self,
     uint32_t start_index, uint32_t len, uint8_t* values) {
-    memcpy(values, (uint8_t *)(self->start_address + start_index), len);
+    memcpy(values, (uint8_t *)(__nvm_flash_start_addr + start_index), len);
 }
